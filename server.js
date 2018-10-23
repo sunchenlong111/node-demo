@@ -26,26 +26,34 @@ var server = http.createServer(function(request, response){
   console.log('Along说：得到 HTTP 路径\n' + path)
   
   
-  if(path == '/'){
+    if(path === '/'){
+    var string = fs.readFileSync('./index.html','utf8')
+    var amount = fs.readFileSync('./db','utf8')//同步读一个文件
+    string=string.replace('&&&amount&&&',amount)
     response.setHeader('Content-Type', 'text/html; charset=utf-8')
-    response.write(`<!DOCTYPE>\n<html>
-    <head><link rel="stylesheet" href="/style.css"></head>
-    <body><h1>你好</h1>
-    <script src="/script.js"></script>
-    </body>
-    </html>`)
+    response.write(string)
     response.end()
-  }else if( path == '/style.css'){
-    response.setHeader('Content-Type', 'text/html; charset=utf-8')
-    response.write(`body{background:grey;}h1{color:red;}`)
+  }else if( path === '/style.css'){
+    var string = fs.readFileSync('./style.css','utf8')
+    response.setHeader('Content-Type', 'text/css')
+    response.write(string)
     response.end()
-  }else if( path == '/script.js'){
-    response.setHeader('Content-Type', 'text/html; charset=utf-8')
-    response.write(`alert('hehe')`)
+  }else if( path === '/main.js'){
+    var string = fs.readFileSync('./main.js','utf8')
+    response.setHeader('Content-Type', 'application/javascript')
+    response.write(string)
     response.end()
+  }else if(path === '/pay' && method.toUpperCase()==='POST'){
+     var amount = fs.readFileSync('./db','utf8')//同步读一个文件
+     var newAmount = amount - 1
+     fs.writeFileSync('./db',newAmount)
+     response.write('success!')
+     response.end()
   }
   else{
     response.statusCode = 404
+    response.setHeader('Content-type','text/html;charset=utf-8')
+    response.write('找不到对应的路径')
     response.end()
   }	
 
