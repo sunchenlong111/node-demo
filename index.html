@@ -1,5 +1,57 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
+
+<head>
+  <title>首页</title>
+  <link rel='stylesheet' href='/style.css'>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<body>
+  <h5>您的账户余额是<span id='amount'>&&&amount&&&</span></h5>
+  <button id="button">打钱</button>
+
+  <script>
+    button.onclick = function () {
+
+        $.ajax({
+              url: "http://jack.com:8002/pay",
+              jsonp: "callback",
+              dataType: "jsonp",
+              success: function (response) {
+                if (response === 'success') {
+                  amount.innerText = amount.innerText - 1;
+                }
+              }
+              })
+
+              // let script = document.createElement('script')
+              // let functionName = 'frank' + parseInt(Math.random() * 1000000, 10)
+              // window[functionName] = function (result) {
+              //   if (result === 'success') {
+              //     amount.innerText = amount.innerText - 1;
+              //   } else {
+
+              //   }
+              // }
+              // script.src = 'http://jack.com:8002/pay?callback=' + functionName
+              // document.body.appendChild(script)
+              // script.onload = function (e) {
+              //   e.currentTarget.remove()
+              //   delete window[functionName]
+              // }
+              // script.onerror = function (e) {
+              //   alert('fail')
+              //   e.currentTarget.remove()
+              //   delete window[functionName]
+              // }
+            }
+  </script>
+</body>
+
+</html>
+=======
   <head>
     <title>首页</title>
     <link rel='stylesheet' href='/style.css'>
@@ -16,3 +68,4 @@
      </script>
   </body>
 </html>
+>>>>>>> 3dcdb51beb3c33c2463f8f24cb7e6c966f92817c
