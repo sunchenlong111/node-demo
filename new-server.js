@@ -38,7 +38,7 @@ var server = http.createServer(function (request, response) {
   }else if(path === '/xxx'){
     response.statusCode = 200
     response.setHeader('Content-Type', 'text/json;charset=utf-8')
-    response.setHeader('Access-Control-Allow-Origin','http://frank.com:8001')
+    response.setHeader('Access-Control-Allow-Origin','http://frank.com:8001')//跨域
 
     response.write(`
      {
@@ -55,7 +55,9 @@ var server = http.createServer(function (request, response) {
   else {
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write('呜呜呜')
+    response.write(`{
+      "error": "not found"
+    }`)
     response.end()
   }
 

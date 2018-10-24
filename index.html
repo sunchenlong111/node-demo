@@ -16,7 +16,6 @@
 
         $.ajax({
               url: "http://jack.com:8002/pay",
-              jsonp: "callback",
               dataType: "jsonp",
               success: function (response) {
                 if (response === 'success') {

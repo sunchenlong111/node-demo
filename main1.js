@@ -1,27 +1,74 @@
-btn.addEventListener('click', (e) => {
-  let xhr = new XMLHttpRequest()
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      console.log('请求响应完毕了')
-      if (xhr.status === 200) {
-        console.log('请求成功')
-        console.log(typeof xhr.responseText)
-        console.log(xhr.responseText)
-        let string = xhr.responseText
-        let object = window.JSON.parse(string)
-        console.log(object)
-        console.log(typeof object)
-        console.log('object.node.from')
-        console.log(object.node.from)
-        // let parser = new DOMParser()
-        // let xmlDoc = parser.parseFromString(xhr.responseText,"text/html")
-        // let title = xmlDoc.getElementsByTagName('heading')[0].textContent
-        // console.log(title)
-      } else if(xhr.status >= 400){
-        console.log('请求失败')
+window.jQuery = function (nodeOrSelector) {
+  let nodes = {}
+  nodes.addClass = function () {}
+  nodes.html = function () {}
+  return nodes
+}
+window.$ = window.jQuery
+
+
+window.jQuery.ajax = function ({url,method,body,successFn,failFn,headers}) {
+
+  
+  // let url = options.url
+  // let method = options.method
+  // let body = options.body
+  // let successFn = options.successFn
+  // let failFn = options.failFn
+  // let headers = options.headers
+  // //es6解构赋值
+  // let {url,method,body,successFn,failFn,headers} = options
+
+   // if(arguments.length === 1){
+   //   url = options.url
+   // }else if(arguments.length === 2){
+   //   url = arguments[0]
+   //   options = arguments[1]
+   // }
+   //如何设置接受两种参数
+
+  let request = new XMLHttpRequest()
+  request.open(method, url)
+  
+  //设置请求头
+  for(let key in headers){
+    let value = headers[key]
+    request.setRequestHeader(key,value)
+  }
+
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      if (request.status >= 200 && request.status < 300) {
+        successFn.call(undefined, request.responseText)
+      } else if (request.status >= 400) {
+        failFn.call(undefined, request)
       }
     }
   }
-  xhr.open('GET', 'http://jack.com:8002/xxx')
-  xhr.send()
+  request.send(body)
+}
+
+function f1(responseText){}
+function f2(responseText){}
+
+btn.addEventListener('click', (e) => {
+  
+    window.jQuery.ajax({
+      url: '/xxx',
+      method: 'get',
+      headers:{
+        'Content-type':'application/x-www-form-urlencoded',
+        'frank':'18'
+      },
+      successFn: (x) => {
+        console.log(x)
+        f1.call(undefined,x)
+        f2.call(undefined,x)
+      },
+      failFn: (x) => {
+        console.log(x)
+        console.log(x.status)
+        console.log(x.responseText)
+      }
+    })
 })
